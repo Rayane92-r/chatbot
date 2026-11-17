@@ -1,0 +1,44 @@
+
+<!DOCTYPE html>
+<html lang="fr" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Connexion | Chatbot IA</title>
+
+    <link rel="stylesheet" th:href="@{/vendor/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card shadow p-4">
+                <h2 class="text-center mb-4">Connexion</h2>
+
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Adresse e-mail</label>
+                        <input type="email" class="form-control"
+                               placeholder="Votre adresse e-mail">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Mot de passe</label>
+                        <input type="password" class="form-control"
+                               placeholder="Votre mot de passe">
+                    </div>
+
+                    <button type="button" class="btn btn-primary w-100">
+                        Se connecter
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/vendor/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>
