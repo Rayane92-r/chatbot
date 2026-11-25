@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping
 class ChatBotController {
 
     // Page d'accueil
-    @GetMapping("/")
+    @GetMapping("/ancien-chat")
     fun accueil(): String {
         return "exemple"
     }

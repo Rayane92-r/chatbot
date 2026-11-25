@@ -1,0 +1,23 @@
+<aside xmlns:th="http://www.thymeleaf.org"
+       th:fragment="sidebar"
+       class="sidebar p-3 d-flex flex-column">
+
+    <h4 class="text-white mb-4">Chatbot IA</h4>
+
+    <a th:href="@{/}"
+       class="btn btn-outline-light w-100 mb-4">
+        + Nouvelle conversation
+    </a>
+
+    <h6 class="text-secondary">Historique</h6>
+
+    <div class="list-group">
+        <a th:each="c : ${conversations}"
+           th:href="@{/conversations/{id}(id=${c.id})}"
+           th:text="${c.titre}"
+           class="list-group-item list-group-item-action"
+           th:classappend="${conversation != null and conversation.id == c.id} ? 'active' : ''">
+        </a>
+    </div>
+
+</aside>

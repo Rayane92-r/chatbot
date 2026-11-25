@@ -1,5 +1,5 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap");
 
 :root {
     --primary: #1E3A8A;
@@ -9,6 +9,7 @@
     --gray-light: #F3F4F6;
 }
 
+/* Général */
 body {
     font-family: 'Inter', sans-serif;
     background-color: var(--gray-light);
@@ -20,6 +21,7 @@ h1, h2, h3, h4, h5 {
     color: var(--primary);
 }
 
+/* Boutons */
 .btn-primary {
     background-color: var(--primary-light);
     border-color: var(--primary-light);
@@ -29,4 +31,95 @@ h1, h2, h3, h4, h5 {
 .btn-primary:hover {
     background-color: var(--primary);
     border-color: var(--primary);
+}
+
+/* Structure */
+.app-layout {
+    min-height: 100vh;
+    background: #f5f7fb;
+}
+
+/* Barre latérale */
+.sidebar {
+    width: 280px;
+    min-width: 280px;
+    min-height: 100vh;
+    background-color: #142b50 !important;
+    color: #ffffff;
+}
+
+/* Titre du menu */
+.sidebar h4 {
+    color: #ffffff !important;
+}
+
+/* Historique */
+.sidebar h6 {
+    color: #aabbd4 !important;
+}
+
+/* Liens des conversations */
+.sidebar .list-group a.list-group-item,
+.sidebar .list-group a.list-group-item:visited {
+    background-color: transparent !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 8px;
+    text-decoration: none !important;
+    margin-bottom: 5px;
+    transition: background-color 0.2s ease;
+}
+
+/* Survol et conversation sélectionnée */
+.sidebar .list-group a.list-group-item:hover,
+.sidebar .list-group a.list-group-item.active {
+    background-color: #2563eb !important;
+    color: #ffffff !important;
+    text-decoration: none !important;
+}
+
+/* Nouvelle conversation */
+.sidebar .btn-outline-light {
+    color: #ffffff;
+    border-color: #aabbd4;
+}
+
+.sidebar .btn-outline-light:hover {
+    background-color: #2563eb;
+    color: #ffffff;
+}
+
+/* Page du chatbot */
+.chat-page {
+    min-height: 100vh;
+}
+
+/* Pied de page */
+.app-footer {
+    background-color: #ffffff;
+    border-top: 1px solid #e5e7eb;
+    color: #142b50;
+    padding: 15px;
+}
+/* Correction définitive des liens de l'historique */
+aside.sidebar .list-group a {
+    color: #ffffff !important;
+    text-decoration: none !important;
+    background: transparent !important;
+    border: none !important;
+    display: block;
+    padding: 10px 12px;
+    border-radius: 8px;
+}
+
+/* Survol */
+aside.sidebar .list-group a:hover {
+    color: #ffffff !important;
+    background-color: #2563eb !important;
+}
+
+/* Conversation sélectionnée */
+aside.sidebar .list-group a.active {
+    color: #ffffff !important;
+    background-color: #2563eb !important;
 }

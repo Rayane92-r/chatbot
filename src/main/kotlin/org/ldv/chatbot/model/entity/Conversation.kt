@@ -21,6 +21,11 @@ class Conversation(
     @Column(nullable = false)
     var dateModification: LocalDateTime,
 
+    // Association ManyToOne avec ModeleIA
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "modele_ia_id", nullable = false)
+    var modeleIA: ModeleIA,
+
     // Association OneToMany avec Message
     @OneToMany(
         mappedBy = "conversation",
