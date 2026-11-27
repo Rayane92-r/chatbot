@@ -26,6 +26,11 @@ class Conversation(
     @JoinColumn(name = "modele_ia_id", nullable = false)
     var modeleIA: ModeleIA,
 
+    // Association ManyToOne avec Utilisateur
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "utilisateur_id", nullable = false)
+    var utilisateur: Utilisateur,
+
     // Association OneToMany avec Message
     @OneToMany(
         mappedBy = "conversation",

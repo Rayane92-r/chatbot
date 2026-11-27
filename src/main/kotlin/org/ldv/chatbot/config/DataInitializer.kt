@@ -3,16 +3,24 @@ package org.ldv.chatbot.config
 
 import org.ldv.chatbot.model.dao.FournisseurIADAO
 import org.ldv.chatbot.model.dao.ModeleIADAO
+import org.ldv.chatbot.model.dao.RoleDAO
+import org.ldv.chatbot.model.dao.UtilisateurDAO
 import org.ldv.chatbot.model.entity.FournisseurIA
 import org.ldv.chatbot.model.entity.ModeleIA
+import org.ldv.chatbot.model.entity.Role
+import org.ldv.chatbot.model.entity.Utilisateur
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.crypto.password.PasswordEncoder
 
 @Configuration
 class DataInitializer(
     private val fournisseurIADAO: FournisseurIADAO,
-    private val modeleIADAO: ModeleIADAO
+    private val modeleIADAO: ModeleIADAO,
+    private val roleDAO: RoleDAO,
+    private val utilisateurDAO: UtilisateurDAO,
+    private val passwordEncoder: PasswordEncoder
 ) {
 
     @Bean
@@ -20,6 +28,7 @@ class DataInitializer(
         return CommandLineRunner {
 
             // Création des fournisseurs
+
             val mistral = fournisseurIADAO.findAll()
                 .firstOrNull { it.nom == "Mistral" }
                 ?: fournisseurIADAO.save(
@@ -41,7 +50,9 @@ class DataInitializer(
                 )
 
             // Liste des modèles à initialiser
+
             val modeles = listOf(
+
                 ModeleIA(
                     nom = "gemini-3.8-flash",
                     identifiantTechnique = "gemini-3.8-flash",
@@ -50,6 +61,7 @@ class DataInitializer(
                     cheminLogo = "/images/gemini.png",
                     fournisseurIA = gemini
                 ),
+
                 ModeleIA(
                     nom = "gemini-3.5-flash-lite",
                     identifiantTechnique = "gemini-3.5-flash-lite",
@@ -58,6 +70,7 @@ class DataInitializer(
                     cheminLogo = "/images/gemini.png",
                     fournisseurIA = gemini
                 ),
+
                 ModeleIA(
                     nom = "mistral-small-latest",
                     identifiantTechnique = "mistral-small-latest",
@@ -66,6 +79,7 @@ class DataInitializer(
                     cheminLogo = "/images/mistral.png",
                     fournisseurIA = mistral
                 ),
+
                 ModeleIA(
                     nom = "mistral-medium-latest",
                     identifiantTechnique = "mistral-medium-latest",
@@ -76,14 +90,71 @@ class DataInitializer(
                 )
             )
 
-            // Éviter les doublons
-            modeles.forEach { modele ->
-                val existe = modeleIADAO.findAll()
-                    .any { it.nom == modele.nom }
+            // Éviter les doublons de modèles
 
-                if (!existe) {
+            val nomsExistants = modeleIADAO.findAll()
+                .map { it.nom }
+                .toMutableSet()
+
+            modeles.forEach { modele ->
+                if (nomsExistants.add(modele.nom)) {
                     modeleIADAO.save(modele)
                 }
+            }
+
+            // Création des rôles
+
+            val roleUser = roleDAO.findAll()
+                .firstOrNull { it.nomLogique == "ROLE_USER" }
+                ?: roleDAO.save(
+                    Role(
+                        nom = "Utilisateur",
+                        nomLogique = "ROLE_USER"
+                    )
+                )
+
+            val roleAdmin = roleDAO.findAll()
+                .firstOrNull { it.nomLogique == "ROLE_ADMIN" }
+                ?: roleDAO.save(
+                    Role(
+                        nom = "Administrateur",
+                        nomLogique = "ROLE_ADMIN"
+                    )
+                )
+
+            // Création des utilisateurs
+
+            val utilisateurs = utilisateurDAO.findAll()
+
+            if (utilisateurs.isEmpty()) {
+
+                // Compte administrateur
+
+                utilisateurDAO.save(
+                    Utilisateur(
+                        prenom = "Timothée",
+                        nom = "Moulin",
+                        email = "admin@email.com",
+                        motDePasse = requireNotNull(
+                            passwordEncoder.encode("admin123")
+                        ),
+                        role = roleAdmin
+                    )
+                )
+
+                // Compte utilisateur
+
+                utilisateurDAO.save(
+                    Utilisateur(
+                        nom = "Prane",
+                        prenom = "Doli",
+                        email = "doli.prane@email.com",
+                        motDePasse = requireNotNull(
+                            passwordEncoder.encode("user123")
+                        ),
+                        role = roleUser
+                    )
+                )
             }
         }
     }

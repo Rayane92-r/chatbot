@@ -38,6 +38,8 @@ dependencies {
     implementation("org.commonmark:commonmark-ext-gfm-tables:0.32.0")
     // Nettoyage HTML et protection XSS
     implementation("org.jsoup:jsoup:1.24.1")
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
 
     testImplementation("org.springframework.boot:spring-boot-starter-data-jpa-test")
     testImplementation("org.springframework.boot:spring-boot-starter-thymeleaf-test")

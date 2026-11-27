@@ -1,23 +1,57 @@
+
 <aside xmlns:th="http://www.thymeleaf.org"
        th:fragment="sidebar"
        class="sidebar p-3 d-flex flex-column">
 
     <h4 class="text-white mb-4">Chatbot IA</h4>
 
+    <!-- Informations de l'utilisateur connecté -->
+    <div class="user-info mb-4">
+
+        <span class="text-white"
+              th:text="${utilisateur != null ? utilisateur.prenom + ' ' + utilisateur.nom : 'Anonyme'}">
+            Anonyme
+        </span>
+
+        <br>
+
+        <small class="text-secondary"
+               th:text="${utilisateur != null ? utilisateur.role.nom : 'Visiteur'}">
+            Visiteur
+        </small>
+
+    </div>
+
+    <!-- Nouvelle conversation -->
     <a th:href="@{/}"
        class="btn btn-outline-light w-100 mb-4">
         + Nouvelle conversation
     </a>
 
+    <!-- Historique -->
     <h6 class="text-secondary">Historique</h6>
 
     <div class="list-group">
+
         <a th:each="c : ${conversations}"
            th:href="@{/conversations/{id}(id=${c.id})}"
            th:text="${c.titre}"
            class="list-group-item list-group-item-action"
            th:classappend="${conversation != null and conversation.id == c.id} ? 'active' : ''">
         </a>
+
     </div>
+
+    <!-- Déconnexion -->
+    <form th:action="@{/logout}"
+          method="post"
+          class="mt-auto pt-3">
+
+        <button type="submit"
+                class="btn btn-danger w-100">
+            Déconnexion
+        </button>
+
+    </form>
 
 </aside>
